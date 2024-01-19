@@ -52,8 +52,8 @@
           {{ $t('general.update') }}
         </v-btn>
         <v-spacer />
-        <v-btn size="small" variant="flat" prepend-icon="mdi-tag" @click="open_external(`https://github.com/naeruru/mimiuchi/releases/tag/v${APP_VERSION}`)">
-          v{{ APP_VERSION }}
+        <v-btn size="small" variant="flat" prepend-icon="mdi-tag" @click="open_external(`https://github.com/naeruru/mimiuchi`)">
+          V{{ APP_VERSION }}
         </v-btn>
       </v-col>
     </template>
