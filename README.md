@@ -4,9 +4,9 @@
 
 # mimiuchi: speech-to-text
 
-mimiuchi is a free, customizable, OSC capable, speech-to-text application for displaying text or relaying it to other applications such as VRChat. Its customizable text window is also designed to be paired with applications like [OBS (Open Broadcaster Software)](https://obsproject.com/).
+mimiuchi is a free, customizable, and OSC capable speech-to-text application for displaying text or relaying it to other applications such as VRChat. Its customizable text window is also designed to be paired with applications like [OBS (Open Broadcaster Software)](https://obsproject.com/).
 
-You can try it out right now at [mimiuchi.com](https://mimiuchi.com/) on Google Chrome, Safari, or Microsoft Edge.
+You can try it out at [mimiuchi.com](https://mimiuchi.com/) on Google Chrome, Safari, or Microsoft Edge.
 
 ### Features
 
@@ -47,42 +47,13 @@ Speech to Text → OSC Broadcasting → VRChat
 
 # Additional Info
 
-### Why?
-
-This tool was designed for communication accessibility. It provides another way for people to display text in various formats. It is free and focused on privacy. A very similar application is [web captioner](https://webcaptioner.com/). However, I wanted to expand upon it and develop something unique!
-
 ## Web Speech API
 
-mimiuchi uses [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) to perform speech-to-text, which is a [browser dependent](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility) API. Most browsers, such as Google Chrome or Microsoft Edge, will respectively upload your audio to Google Cloud Platform or Microsoft Azure to have it processed while the webpage never gets direct access to it. You can read about it [here](https://www.google.com/chrome/privacy/whitepaper.html#speech) in the Google Chrome Privacy Whitepaper. I chose Web Speech API, because it is completely free and requires no account to access. Unfortunately, its free use is disabled in Electron's Chromium. Therefore, speech-to-text can only be achieved in the web browser. This adds the slight complexity of requiring a "middle application" when you want to interface with local applications like VRChat. However, I think that this approach is worthwhile as it provides a free way to use powerful speech-to-text models for people who don't have the means to pay.
-
-In the future, I would like to support a standalone desktop experience, but this is currently on hold until I determine demand for this project.
-
-## To-Do
-
-In no particular order...
-
-- more customization for text window
-- ~~better intermediate text results~~ ✅
-- ~~text-to-speech~~ ✅
-- more TTS/STT options (for standalone desktop experience)
-- VRChat text shader support (sending character data to float params)
-- ~~add ability to export settings/transcripts~~✅
-- ~~better webkit/safari support~~✅
-- Spotify support (maybe)
-- OBS websocket and 'text source' support
-- option for second 'control panel' type screen with focus on quick switching between settings
-- better generic osc support
-- ~~translation support~~✅
-- ~~webhook/websocket customization to connect to other apps that aren't related to me~~✅
-- documentation
-- steamvr integration
-- continuous text transmission option for VRChat
-- locally run whisper c++ bindings / WebGPU based inference
-  - this point is really important to me, because I want a truly low latency private STT system. but... I want to make sure I do it the right way, such that it can work entirely in the browser, utilizing the full power of your GPU or CPU, completely local and with minimal latency. A lot of this is very new, so it may take some time to iron it out. the first versions of it may differ greatly from the end goal.
+mimiuchi uses [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) to perform speech-to-text, which is a [browser dependent](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#browser_compatibility) API. Most browsers, such as Google Chrome or Microsoft Edge, will respectively upload your audio to Google Cloud Platform or Microsoft Azure to have it processed while the webpage never gets direct access to it. You can read about it [here](https://www.google.com/chrome/privacy/whitepaper.html#speech) in the Google Chrome Privacy Whitepaper. Unfortunately, its free use is limited in Electron's Chromium. Therefore, speech-to-text can only be achieved in the web browser. This adds the slight complexity of requiring a "middle application" for interfacing with local applications like VRChat.
 
 ## Download
 
-See the [release page](https://github.com/naeruru/mimiuchi/releases) to install the latest version of the desktop application. The desktop version lets you use additional features like OSC.
+See the [Releases page](https://github.com/naeruru/mimiuchi/releases) to install the latest version of the desktop application. The desktop version allows you to use additional features like OSC.
 
 ## Building it yourself
 
