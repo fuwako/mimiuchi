@@ -1,11 +1,11 @@
 <template>
-  <v-card :title="$t('settings.word_replace.title')" :subtitle="$t('settings.word_replace.description')" color="transparent" flat>
+  <v-card :title="$t('settings.captions.word_replace.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
       <v-card flat>
         <v-switch
           v-model="wordReplaceStore.enabled"
-          :label="$t('settings.word_replace.enabled')"
+          :label="$t('settings.captions.word_replace.enabled')"
           color="primary"
           hide-details
           inset
@@ -15,10 +15,10 @@
       <div v-if="replacements.length" class="mt-6">
         <v-row v-for="(replacement, i) in replacements">
           <v-col :cols="12" :sm="6">
-            <v-text-field v-model="replacement.replacing" :label="$t('settings.word_replace.replacing')" append-icon="mdi-arrow-right-bold" hide-details />
+            <v-text-field v-model="replacement.replacing" :label="$t('settings.captions.word_replace.replacing')" append-icon="mdi-arrow-right-bold" hide-details />
           </v-col>
           <v-col :cols="10" :sm="6">
-            <v-text-field v-model="replacement.replacement" :label="$t('settings.word_replace.replacement')" hide-details>
+            <v-text-field v-model="replacement.replacement" :label="$t('settings.captions.word_replace.replacement')" hide-details>
               <template #append>
                 <v-btn size="x-small" color="red" icon="mdi-minus" @click="remove_entry(i)" />
               </template>
@@ -27,7 +27,7 @@
         </v-row>
       </div>
       <p v-else class="mt-6">
-        {{ $t('settings.word_replace.info') }}
+        {{ $t('settings.captions.word_replace.info') }}
       </p>
       <v-card class="mt-4" color="transparent" flat>
         <v-card-actions>

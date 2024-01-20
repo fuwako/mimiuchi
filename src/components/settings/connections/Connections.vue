@@ -1,14 +1,5 @@
 <template>
   <v-card :title="$t('settings.connections.title')" color="transparent" flat>
-    <template #subtitle>
-      <i18n-t keypath="settings.connections.description" tag="label" scope="global">
-        <template #icon>
-          <v-icon color="success">
-            mdi-broadcast
-          </v-icon>
-        </template>
-      </i18n-t>
-    </template>
     <ConnectionDialog v-model="dialog" :connection="connection_type" />
     <v-divider />
     <v-card-text>
@@ -147,6 +138,7 @@
           </v-card>
           <!-- <v-card>meow</v-card> -->
         </v-col>
+        <v-divider />
       </v-row>
     </v-card-text>
   </v-card>
@@ -166,7 +158,7 @@ declare interface ConnectionType {
 }
 
 export default {
-  name: 'SettingsGeneral',
+  name: 'SettingsConnections',
   components: { ConnectionDialog },
   setup() {
     const connectionStore = useConnectionStore()

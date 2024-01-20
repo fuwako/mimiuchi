@@ -151,7 +151,7 @@ export default {
   },
   computed: {
     last_setting() {
-      return (this.last_route && this.last_route.startsWith('/settings')) ? this.last_route : '/settings/general'
+      return (this.last_route && this.last_route.startsWith('/settings')) ? this.last_route : '/settings/language'
     },
   },
   watch: {

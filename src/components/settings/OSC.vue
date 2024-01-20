@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('settings.osc.general.title')" :subtitle="$t('settings.osc.general.description')" color="transparent" flat>
+  <v-card :title="$t('settings.osc.general.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
       <v-row v-if="is_electron()">
@@ -70,6 +70,7 @@
             />
           </v-card>
         </v-col>
+        <v-divider />
       </v-row>
       <v-row v-if="!is_electron()" class="justify-center">
         <v-col :cols="12">
@@ -99,7 +100,7 @@ import { useOSCStore } from '@/stores/osc'
 import is_electron from '@/helpers/is_electron'
 
 export default {
-  name: 'SettingsGeneral',
+  name: 'SettingsOSC',
   setup() {
     const oscStore = useOSCStore()
 

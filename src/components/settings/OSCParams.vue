@@ -6,9 +6,6 @@
         Subject to change
       </v-chip>
     </v-card-title>
-    <v-card-subtitle class="overflow-hidden">
-      Add custom param triggers here.
-    </v-card-subtitle>
     <v-divider />
     <v-card-text>
       <v-card v-for="(param, i) in oscStore.osc_params" v-if="oscStore.osc_params.length" class="mb-4">
@@ -195,7 +192,7 @@ interface Assign {
 }
 
 export default {
-  name: 'SettingsGeneral',
+  name: 'SettingsOSCParams',
   setup() {
     const oscStore = useOSCStore()
 

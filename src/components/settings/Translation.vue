@@ -1,19 +1,19 @@
 <template>
-  <v-card :title="$t('settings.translation.title')" :subtitle="$t('settings.translation.description')" color="transparent" flat>
+  <v-card :title="$t('settings.captions.translation.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
       <v-row>
         <v-col>
           <v-chip variant="outlined" label color="error" size="large">
             <v-icon start icon="mdi-alert" />
-            {{ $t('settings.translation.warning') }}
+            {{ $t('settings.captions.translation.warning') }}
           </v-chip>
         </v-col>
         <v-col :cols="12">
           <v-card flat>
             <v-switch
               v-model="translationStore.enabled"
-              :label="$t('settings.translation.enabled')"
+              :label="$t('settings.captions.translation.enabled')"
               color="primary"
               hide-details
               inset
@@ -24,7 +24,7 @@
         <v-col :cols="12">
           <v-select
             v-model="translationStore.type"
-            :label="$t('settings.translation.type')"
+            :label="$t('settings.captions.translation.type')"
             :items="translation_types"
             item-title="title"
             item-value="value"
@@ -43,7 +43,7 @@
         <v-col v-if="translation_types.find(o => o.type === 'local')" :cols="12">
           <v-alert variant="outlined" type="info" prominent>
             <v-alert-title class="text-subtitle-1">
-              <i18n-t keypath="settings.translation.ml_notice" tag="label" scope="global">
+              <i18n-t keypath="settings.captions.translation.ml_notice" tag="label" scope="global">
                 <span class="text-primary">{{ translationStore.type }}</span>
               </i18n-t>
             </v-alert-title>
@@ -52,19 +52,19 @@
         <v-col :cols="12" :sm="6">
           <v-autocomplete
             v-model="translationStore.source"
-            :label="$t('settings.translation.source')"
+            :label="$t('settings.captions.translation.source')"
             :items="translation_options"
             item-title="title"
             item-value="value"
             auto-select-first
-            :hint="`${$t('settings.translation.speech_lang')}${stt_language}`"
+            :hint="`${$t('settings.captions.translation.speech_lang')}${stt_language}`"
             persistent-hint
           />
         </v-col>
         <v-col :cols="12" :sm="6">
           <v-autocomplete
             v-model="translationStore.target"
-            :label="$t('settings.translation.target')"
+            :label="$t('settings.captions.translation.target')"
             :items="translation_options"
             item-title="title"
             item-value="value"
@@ -76,7 +76,7 @@
           <v-card flat>
             <v-switch
               v-model="translationStore.show_original"
-              :label="$t('settings.translation.show_original')"
+              :label="$t('settings.captions.translation.show_original')"
               color="primary"
               hide-details
               inset
@@ -84,6 +84,7 @@
             />
           </v-card>
         </v-col>
+        <v-divider />
       </v-row>
     </v-card-text>
   </v-card>

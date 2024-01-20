@@ -6,7 +6,19 @@
     <v-list density="compact" nav>
       <v-list-subheader>{{ $t('settings.title') }}</v-list-subheader>
       <v-list-item
-        v-for="(setting, i) in settings_general"
+        v-for="(setting, i) in settings_language"
+        :prepend-icon="setting.icon"
+        :title="setting.title"
+        :value="setting.value"
+        :active="setting.value === $route.name"
+        color="primary"
+        @click="$router.push({ path: `/settings/${setting.value}` })"
+      />
+
+      <v-divider />
+      <v-list-subheader>{{ $t('settings.captions.title') }}</v-list-subheader>
+      <v-list-item
+        v-for="(setting, i) in settings_captions"
         :prepend-icon="setting.icon"
         :title="setting.title"
         :value="setting.value"
@@ -39,6 +51,18 @@
         @click="$router.push({ path: `/settings/${setting.value}` })"
       />
       <v-divider />
+
+      <v-divider />
+      <v-list-subheader>{{ $t('settings.advanced.title') }}</v-list-subheader>
+      <v-list-item
+        v-for="(setting, i) in settings_advanced"
+        :prepend-icon="setting.icon"
+        :title="setting.title"
+        :value="setting.value"
+        :active="setting.value === $route.name"
+        color="primary"
+        @click="$router.push({ path: `/settings/${setting.value}` })"
+      />
     </v-list>
 
     <!-- <v-list :items="settings_list" density="compact" nav></v-list> -->
@@ -102,39 +126,51 @@ export default {
   },
   computed: {
     outer_size: () => is_electron() ? '140px' : '105px',
-    settings_general() {
+    settings_language() {
       return [
         {
-          title: this.$t('settings.general.title'),
-          value: 'general',
-          icon: 'mdi-home',
+          title: this.$t('settings.language.title'),
+          value: 'language',
+          icon: 'mdi-web',
         },
         {
           title: this.$t('settings.appearance.title'),
           value: 'appearance',
           icon: 'mdi-palette',
         },
+      ]
+    },
+    settings_captions() {
+      const settings_captions = [
         {
-          title: this.$t('settings.stt.title'),
+          title: this.$t('settings.captions.stt.title'),
           value: 'stt',
           icon: 'mdi-microphone-outline',
         },
         {
-          title: this.$t('settings.tts.title'),
+          title: this.$t('settings.captions.tts.title'),
           value: 'tts',
           icon: 'mdi-account-voice',
         },
         {
-          title: this.$t('settings.word_replace.title'),
+          title: this.$t('settings.captions.word_replace.title'),
           value: 'wordreplace',
           icon: 'mdi-swap-horizontal',
         },
         {
-          title: this.$t('settings.translation.title'),
+          title: this.$t('settings.captions.translation.title'),
           value: 'translation',
           icon: 'mdi-translate',
         },
+        {
+          title: this.$t('settings.captions.export.title'),
+          value: 'export',
+          icon: 'mdi-export',
+        },
       ]
+      if (is_electron())
+        return settings_captions
+      else return settings_captions.slice(0, 1)
     },
     connections() {
       return [
@@ -161,6 +197,15 @@ export default {
       if (is_electron())
         return settings_osc
       else return settings_osc.slice(0, 1)
+    },
+    settings_advanced() {
+      return [
+        {
+          title: this.$t('settings.advanced.title'),
+          value: 'advanced',
+          icon: 'mdi-cogs',
+        },
+      ]
     },
   },
   mounted() {

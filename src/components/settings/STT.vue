@@ -1,12 +1,12 @@
 <template>
-  <v-card :title="$t('settings.stt.title')" :subtitle="$t('settings.stt.description')" color="transparent" flat>
+  <v-card :title="$t('settings.captions.stt.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
       <v-row>
         <v-col :cols="12">
           <v-select
             v-model="speechStore.stt.type"
-            :label="$t('settings.stt.type')"
+            :label="$t('settings.captions.tts.type')"
             :items="stt_options"
             item-title="title"
             item-value="value"
@@ -19,7 +19,7 @@
         <v-col :cols="12">
           <v-slider
             v-model="speechStore.stt.sensitivity"
-            :label="$t('settings.stt.sensitivity')"
+            :label="$t('settings.captions.tts.sensitivity')"
             max="1"
             color="orange"
             track-color="green"
@@ -46,13 +46,13 @@
                   :loading="loading_media"
                   @click="test_sensitivity()"
                 >
-                  {{ stream ? $t('settings.stt.sensitivity_stop') : $t('settings.stt.sensitivity_start') }}
+                  {{ stream ? $t('settings.captions.tts.sensitivity_stop') : $t('settings.captions.tts.sensitivity_start') }}
                 </v-btn>
               </template>
             </v-slider>
             <div v-if="active_device" class="text-caption d-flex flex-row-reverse mr-2">
               <p class="text-glow">
-                {{ $t('settings.stt.device') }}{{ active_device }}
+                {{ $t('settings.captions.tts.device') }}{{ active_device }}
               </p>
               <v-icon class="fa fa-circle text-glow blink mr-1">
                 mdi-circle
@@ -62,7 +62,7 @@
         </v-row>
 
         <v-col :cols="12">
-          <v-radio-group v-model="speechStore.stt.language" :label="$t('settings.stt.language')">
+          <v-radio-group v-model="speechStore.stt.language" :label="$t('settings.captions.tts.language')">
             <v-text-field v-model="search_lang" class="mb-2" label="Search" variant="outlined" single-line hide-details />
             <v-card v-for="(language, i) in filtered_lang" class="pa-2 mb-2" :color="language.value === speechStore.stt.language ? 'primary' : 'default'" @click="speechStore.stt.language = language.value">
               <v-radio :label="language.title" :value="language.value">
@@ -78,8 +78,8 @@
       <v-card-text v-else>
         <v-alert variant="outlined" type="warning" prominent>
           <v-alert-title>
-            <i18n-t keypath="settings.stt.unsupported.text" tag="label" for="link" scope="global">
-              <a class="text-primary pointer" @click="openURL('https://mimiuchi.com/')">{{ $t('settings.stt.unsupported.link') }}</a>
+            <i18n-t keypath="settings.captions.tts.unsupported.text" tag="label" for="link" scope="global">
+              <a class="text-primary pointer" @click="openURL('https://mimiuchi.com/')">{{ $t('settings.captions.tts.unsupported.link') }}</a>
             </i18n-t>
           </v-alert-title>
         </v-alert>
