@@ -2,11 +2,11 @@
   <v-card :title="$t('settings.captions.stt.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
-      <v-row>
+      <v-row v-if="!is_electron()">
         <v-col :cols="12">
           <v-select
             v-model="speechStore.stt.type"
-            :label="$t('settings.captions.tts.type')"
+            :label="$t('settings.captions.stt.type')"
             :items="stt_options"
             item-title="title"
             item-value="value"
@@ -19,7 +19,7 @@
         <v-col :cols="12">
           <v-slider
             v-model="speechStore.stt.sensitivity"
-            :label="$t('settings.captions.tts.sensitivity')"
+            :label="$t('settings.captions.stt.sensitivity')"
             max="1"
             color="orange"
             track-color="green"
@@ -46,13 +46,13 @@
                   :loading="loading_media"
                   @click="test_sensitivity()"
                 >
-                  {{ stream ? $t('settings.captions.tts.sensitivity_stop') : $t('settings.captions.tts.sensitivity_start') }}
+                  {{ stream ? $t('settings.captions.stt.sensitivity_stop') : $t('settings.captions.stt.sensitivity_start') }}
                 </v-btn>
               </template>
             </v-slider>
             <div v-if="active_device" class="text-caption d-flex flex-row-reverse mr-2">
               <p class="text-glow">
-                {{ $t('settings.captions.tts.device') }}{{ active_device }}
+                {{ $t('settings.captions.stt.device') }}{{ active_device }}
               </p>
               <v-icon class="fa fa-circle text-glow blink mr-1">
                 mdi-circle
@@ -62,9 +62,18 @@
         </v-row>
 
         <v-col :cols="12">
-          <v-radio-group v-model="speechStore.stt.language" :label="$t('settings.captions.tts.language')">
+          <v-radio-group v-model="speechStore.stt.language" v-if="speechStore.recently_used_languages[0].title.length > 1" label="Recently used languages">
+            <v-card v-for="(language, i) in speechStore.recently_used_languages" class="pa-2 mb-2" :color="language.value === speechStore.stt.language ? 'primary' : 'default'" @click="select_language(language.title, language.value)">
+              <v-radio :label="language.title" :value="language.value">
+                <template #label>
+                  <div>{{ language.title }}</div>
+                </template>
+              </v-radio>
+            </v-card>
+          </v-radio-group>
+          <v-radio-group v-model="speechStore.stt.language" :label="$t('settings.captions.stt.language')">
             <v-text-field v-model="search_lang" class="mb-2" label="Search" variant="outlined" single-line hide-details />
-            <v-card v-for="(language, i) in filtered_lang" class="pa-2 mb-2" :color="language.value === speechStore.stt.language ? 'primary' : 'default'" @click="speechStore.stt.language = language.value">
+            <v-card v-for="(language, i) in filtered_lang" class="pa-2 mb-2" :color="language.value === speechStore.stt.language ? 'primary' : 'default'" @click="select_language(language.title, language.value)">
               <v-radio :label="language.title" :value="language.value">
                 <template #label>
                   <div>{{ language.title }}</div>
@@ -78,8 +87,8 @@
       <v-card-text v-else>
         <v-alert variant="outlined" type="warning" prominent>
           <v-alert-title>
-            <i18n-t keypath="settings.captions.tts.unsupported.text" tag="label" for="link" scope="global">
-              <a class="text-primary pointer" @click="openURL('https://mimiuchi.com/')">{{ $t('settings.captions.tts.unsupported.link') }}</a>
+            <i18n-t keypath="settings.captions.stt.unsupported.text" tag="label" for="link" scope="global">
+              <a class="text-primary pointer" @click="openURL('https://mimiuchi.com/')">{{ $t('settings.captions.stt.unsupported.link') }}</a>
             </i18n-t>
           </v-alert-title>
         </v-alert>
@@ -204,6 +213,38 @@ export default {
         })
       })
     },
+    select_language(selected_title: string, selected_value: string) {
+      // Reconfigure speech-to-text for recognition and output of this language.
+      this.speechStore.stt.language = selected_title
+
+
+
+
+      // Insert into "recently used" list.
+      const recentLanguages = this.speechStore.recently_used_languages
+
+      // Terminate the function early if the language is already in the list. Only move it to the top.
+      for (let i = 0; i < recentLanguages.length; i++)
+      {
+        if (selected_title == recentLanguages[i].title) {
+          recentLanguages.unshift( ...recentLanguages.splice(i, 1) );
+          return
+        }
+      }
+      
+      // Insert the most recent language into the first index, moving older elements by +1 index.
+      if (recentLanguages[0].title == '') { // Unpopulated.
+        recentLanguages[0] = ({title: selected_title, value: selected_value})
+      }
+      else {
+        recentLanguages.unshift({title: selected_title, value: selected_value})
+      }
+      
+      // Limit the list to 3 languages.
+      if (recentLanguages.length > 3) {
+        recentLanguages.pop()
+      }
+    }
   },
 }
 </script>
