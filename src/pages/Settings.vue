@@ -68,7 +68,7 @@
     <!-- <v-list :items="settings_list" density="compact" nav></v-list> -->
     <template #append>
       <v-divider />
-      <v-col class="d-flex justify-right mt-1 px-2">
+      <v-col class="d-flex justify-end mt-1 px-2">
         <v-btn v-if="update_available" size="small" variant="flat" prepend-icon="mdi-download" @click="open_external('https://github.com/naeruru/mimiuchi/releases/latest')">
           <template #prepend>
             <v-icon color="success" size="large" />
@@ -217,10 +217,17 @@ export default {
           this.update_available = true
       })
     }
+
+    window.addEventListener('keydown', this.handleKeyDown)
   },
   methods: {
     open_external(link: string) {
       window.open(link, '_blank')
+    },
+    handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        this.$router.push({ path: '/' })
+      }
     },
   },
 }

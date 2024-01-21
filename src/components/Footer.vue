@@ -23,6 +23,15 @@
         @submit.prevent="onSubmit()"
       >
         <div class="d-flex w-100 align-center">
+          <div class="d-flex justify-start mr-2">
+            <v-btn v-if="$route.name === 'home'" color="transparent" size="small" icon flat @click="$router.push({ path: last_setting })">
+              <v-icon>mdi-cog</v-icon>
+            </v-btn>
+            <v-btn v-else color="transparent" size="small" icon flat @click="$router.push({ path: '/' })">
+              <v-icon>mdi-home</v-icon>
+            </v-btn>
+          </div>
+
           <v-text-field
             v-model="input_text"
             density="compact"
@@ -50,7 +59,7 @@
 
           <v-spacer v-if="!smAndDown" />
 
-          <div class="d-flex justify-right">
+          <div class="d-flex justify-end">
             <v-btn v-if="!is_electron()" class="mr-4" :color="(defaultStore.speech.listening) ? 'success' : 'error'" size="small" icon variant="outlined" @click="toggleListen">
               <v-icon v-if="!defaultStore.speech.listening">
                 mdi-microphone-off
@@ -59,7 +68,7 @@
                 mdi-microphone
               </v-icon>
             </v-btn>
-            <v-badge :model-value="!!defaultStore.connections" :content="defaultStore.connections ? defaultStore.connections : undefined" color="success" class="mr-4">
+            <v-badge :model-value="!!defaultStore.connections" :content="defaultStore.connections ? defaultStore.connections : undefined" color="success">
               <v-btn :loading="defaultStore.loading_websocket" :disabled="defaultStore.loading_websocket" :color="(defaultStore.broadcasting) ? 'success' : 'error'" size="small" icon variant="outlined" @click="toggleBroadcast">
                 <v-icon v-if="!defaultStore.broadcasting">
                   mdi-broadcast-off
@@ -69,13 +78,6 @@
                 </v-icon>
               </v-btn>
             </v-badge>
-            <v-divider class="mr-4" vertical />
-            <v-btn v-if="$route.name === 'home'" color="transparent" size="small" icon flat @click="$router.push({ path: last_setting })">
-              <v-icon>mdi-cog</v-icon>
-            </v-btn>
-            <v-btn v-else color="transparent" size="small" icon flat @click="$router.push({ path: '/' })">
-              <v-icon>mdi-home</v-icon>
-            </v-btn>
           </div>
         </div>
       </v-form>
