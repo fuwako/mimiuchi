@@ -2,7 +2,7 @@
   <v-card :title="$t('settings.captions.stt.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
-      <v-row>
+      <v-row v-if="!is_electron()">
         <v-col :cols="12">
           <v-select
             v-model="speechStore.stt.type"
@@ -62,9 +62,18 @@
         </v-row>
 
         <v-col :cols="12">
+          <v-radio-group v-model="speechStore.stt.language" v-if="speechStore.recently_used_languages[0].title != ''" label="Recently used languages">
+            <v-card v-for="(language, i) in speechStore.recently_used_languages" class="pa-2 mb-2" :color="language.value === speechStore.stt.language ? 'primary' : 'default'" @click="speechStore.stt.language = language.value">
+              <v-radio :label="language.title" :value="language.value">
+                <template #label>
+                  <div>{{ language.title }}</div>
+                </template>
+              </v-radio>
+            </v-card>
+          </v-radio-group>
           <v-radio-group v-model="speechStore.stt.language" :label="$t('settings.captions.stt.language')">
             <v-text-field v-model="search_lang" class="mb-2" label="Search" variant="outlined" single-line hide-details />
-            <v-card v-for="(language, i) in filtered_lang" class="pa-2 mb-2" :color="language.value === speechStore.stt.language ? 'primary' : 'default'" @click="speechStore.stt.language = language.value">
+            <v-card v-for="(language, i) in filtered_lang" class="pa-2 mb-2" :color="language.value === speechStore.stt.language ? 'primary' : 'default'" @click="select_language(language.title, language.value)">
               <v-radio :label="language.title" :value="language.value">
                 <template #label>
                   <div>{{ language.title }}</div>
@@ -126,6 +135,9 @@ export default {
     stream: null as any,
     sensitivity: 0,
     loading_media: false,
+
+    recents_capacity: 3,
+    recents_iterator: 0
   }),
   computed: {
     filtered_lang() {
@@ -204,6 +216,31 @@ export default {
         })
       })
     },
+    select_language(selected_title: string, selected_value: string) {
+      // Reconfigure speech-to-text for recognition and output of this language.
+      this.speechStore.stt.language = selected_value
+
+
+
+
+      // Recently used languages.
+      const recentLanguages = this.speechStore.recently_used_languages
+
+      // Do nothing if the language is already in the list. Terminate the function early.
+      for (const language of recentLanguages) {
+        if (selected_title == language.title) return;
+      }
+      
+      // Write from top-to-bottom. At max capacity, overwrite from top-to-bottom.
+      if (recentLanguages[this.recents_iterator] == null) {
+        recentLanguages.push({title: selected_title, value: selected_value})
+      }
+      else {
+        recentLanguages[this.recents_iterator] = ({title: selected_title, value: selected_value})
+      }
+
+      this.recents_iterator = (this.recents_iterator + 1) % this.recents_capacity
+    }
   },
 }
 </script>
