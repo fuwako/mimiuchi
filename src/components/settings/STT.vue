@@ -135,6 +135,8 @@ export default {
     stream: null as any,
     sensitivity: 0,
     loading_media: false,
+
+    recents_iterator: 0
   }),
   computed: {
     filtered_lang() {
@@ -215,35 +217,22 @@ export default {
     },
     select_language(selected_title: string, selected_value: string) {
       // Reconfigure speech-to-text for recognition and output of this language.
-      this.speechStore.stt.language = selected_title
+      this.speechStore.stt.language = selected_value
 
 
 
 
-      // Insert into "recently used" list.
+      // Recently used languages.
       const recentLanguages = this.speechStore.recently_used_languages
 
-      // Terminate the function early if the language is already in the list. Only move it to the top.
-      for (let i = 0; i < recentLanguages.length; i++)
-      {
-        if (selected_title == recentLanguages[i].title) {
-          recentLanguages.unshift( ...recentLanguages.splice(i, 1) );
-          return
-        }
+      // Do nothing if the language is already in the list. Terminate the function early.
+      for (const language of recentLanguages) {
+        if (selected_title == language.title) return;
       }
       
-      // Insert the most recent language into the first index, moving older elements by +1 index.
-      if (recentLanguages[0].title == '') { // Unpopulated.
-        recentLanguages[0] = ({title: selected_title, value: selected_value})
-      }
-      else {
-        recentLanguages.unshift({title: selected_title, value: selected_value})
-      }
-      
-      // Limit the list to 3 languages.
-      if (recentLanguages.length > 3) {
-        recentLanguages.pop()
-      }
+      // Write from top-to-bottom. At max capacity, overwrite from top-to-bottom.
+      recentLanguages[this.recents_iterator] = ({title: selected_title, value: selected_value})
+      this.recents_iterator = (this.recents_iterator + 1) % recentLanguages.length
     }
   },
 }

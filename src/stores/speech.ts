@@ -36,6 +36,8 @@ export const useSpeechStore = defineStore('speech', {
     },
     recently_used_languages: [
       { title: '', value: '' },
+      { title: '', value: '' },
+      { title: '', value: '' },
     ]
   }),
   getters: {
