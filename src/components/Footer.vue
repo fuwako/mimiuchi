@@ -43,6 +43,7 @@
             hide-details
             flat
             loading
+            v-if="$route.path == '/'"
           >
             <template #loader>
               <v-progress-linear
