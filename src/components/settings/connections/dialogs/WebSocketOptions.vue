@@ -10,7 +10,7 @@
       <v-text-field
         v-if="is_electron()"
         v-model="modelValue.port"
-        :label="$t('settings.connections.ws.port')"
+        :label="$t('settings.connections.connections.ws.port')"
         type="number"
         :rules="port_rules"
       />

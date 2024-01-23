@@ -28,7 +28,7 @@ export default {
     version_mismatch: 'The desktop app has a different version than the web version. Consider updating, as things might break.',
   },
   settings: {
-    title: 'Settings',
+    title: 'User Settings',
     language: {
       title: 'Language',
       description: 'Language settings',
@@ -87,8 +87,8 @@ export default {
         color: 'Background color',
       },
     },
-    captions: {
-      title: 'Closed Captions',
+    app_settings: {
+      title: 'App Settings',
       stt: {
         title: 'Speech to Text',
         description: 'Speech-to-text settings',
@@ -144,24 +144,27 @@ export default {
     },
     connections: {
       title: 'Connections',
-      description: 'Send data to other applications when using {icon}',
-      update: 'Update Connection',
-      ws: {
-        name: 'Desktop connection',
-        port: 'Websocket Port',
-        description: 'Send real-time text updates over a websocket',
-      },
-      wh: {
-        description: 'Send text updates over a webhook POST request',
-      },
+      connections: {
+        title: 'Connections',
+        description: 'Send data to other applications when using {icon}',
+        update: 'Update Connection',
+        ws: {
+          name: 'Desktop connection',
+          port: 'Websocket Port',
+          description: 'Send real-time text updates over a websocket',
+        },
+        wh: {
+          description: 'Send text updates over a webhook POST request',
+        },
+      }
     },
     osc: {
       title: 'VRChat',
       general: {
-        title: 'General',
+        title: 'Chatbox Relay',
         description: 'Settings for customizing OSC connection',
-        osc_ip: 'Default OSC IP',
-        osc_port: 'Default OSC Port',
+        osc_ip: 'OSC IP',
+        osc_port: 'OSC Port',
         enabled: 'Send all text with OSC (when broadcasting)',
         typing_indicator: 'Enable typing indicator when typing',
         speech_indicator: 'Enable typing indicator for speech-to-text',
@@ -173,8 +176,8 @@ export default {
           icon: 'mdi-broadcast',
         },
       },
-      params: {
-        title: 'Custom Params',
+      parameters: {
+        title: 'Parameter Triggers',
       },
     },
     advanced: {

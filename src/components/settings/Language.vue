@@ -1,5 +1,6 @@
 <template>
   <v-card :title="$t('settings.language.title')" color="transparent" flat>
+    <v-spacer />
     <v-snackbar v-model="snackbar" location="top" color="success">
       {{ snackbar_text }}
       <template #actions>
@@ -8,7 +9,6 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-divider />
     <v-card-text>
       <v-row>
         <v-col :cols="12">
@@ -22,7 +22,6 @@
             </v-card>
           </v-radio-group>
         </v-col>
-        <v-divider />
       </v-row>
     </v-card-text>
   </v-card>

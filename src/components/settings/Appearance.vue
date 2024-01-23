@@ -1,13 +1,8 @@
 <template>
   <v-card :title="$t('settings.appearance.title')" color="transparent" flat>
-    <v-divider />
+    <v-spacer />
     <v-card-text>
       <v-row>
-        <v-col :cols="12">
-          <p class="text-h6" label color="secondary">
-            {{ $t('settings.appearance.text.title') }}
-          </p>
-        </v-col>
         <v-col :cols="12" :md="8">
           <v-autocomplete
             v-model="appearanceStore.text.font"
@@ -69,17 +64,19 @@
             hide-details
           />
         </v-col>
-        <v-divider />
-        <v-col :cols="12" :md="12" class="pb-0">
-          <v-list-item :title="$t('settings.appearance.text.fade')">
-            <template #append>
-              <v-switch
-                v-model="appearanceStore.text.enable_fade"
-                color="primary"
-                inset hide-details
-              />
-            </template>
-          </v-list-item>
+        <v-col :cols="12" :md="12" class="mt-8">
+          <v-card>
+            <v-list-item :title="$t('settings.appearance.text.fade')">
+              <template #append>
+                <v-switch
+                  v-model="appearanceStore.text.enable_fade"
+                  color="primary"
+                  hide-details
+                  inset
+                />
+              </template>
+            </v-list-item>
+          </v-card>
         </v-col>
         <v-col :cols="12" :sm="6">
           <v-text-field
@@ -101,8 +98,7 @@
             hide-details
           />
         </v-col>
-        <v-divider />
-        <v-col :cols="12" :md="12" class="d-flex flex-no-wrap justify-space-between mt-1">
+        <v-col :cols="12" :md="12" class="d-flex flex-no-wrap justify-space-between mt-8">
           <v-card-title class="text-subtitle-1">
             {{ $t('settings.appearance.text.color') }}
           </v-card-title>

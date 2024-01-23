@@ -1,11 +1,11 @@
 <template>
-  <v-card :title="$t('settings.captions.export.title')" color="transparent" flat>
-    <v-divider />
+  <v-card :title="$t('settings.app_settings.export.title')" color="transparent" flat>
+    <v-spacer />
     <v-card-text>
       <v-row>
         <v-col :cols="12" class="d-flex flex-no-wrap justify-space-between">
           <v-card-text class="text-subtitle-1 font-weight-medium">
-            {{ $t('settings.captions.export.transcript') }}
+            {{ $t('settings.app_settings.export.transcript') }}
           </v-card-text>
           <v-btn color="primary" class="mt-2" @click="logStore.export()">
             <v-icon>mdi-download</v-icon>

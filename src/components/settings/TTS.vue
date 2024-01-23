@@ -1,24 +1,27 @@
 <template>
-  <v-card :title="$t('settings.captions.tts.title')" color="transparent" flat>
-    <v-divider />
+  <v-card :title="$t('settings.app_settings.tts.title')" color="transparent" flat>
+    <v-spacer />
     <v-card-text>
       <v-row>
         <v-col :cols="12">
-          <v-card flat>
-            <v-switch
-              v-model="speechStore.tts.enabled"
-              :label="$t('settings.captions.tts.enabled')"
-              color="primary"
-              hide-details
-              inset
-              class="mx-3"
-            />
+          <v-card>
+            <v-list-item :title="$t('settings.app_settings.tts.enabled')  ">
+              <template #append>
+                <v-switch
+                  v-model="speechStore.tts.enabled"
+                  color="primary"
+                  hide-details
+                  inset
+                  class="mx-3"
+                />
+              </template>
+            </v-list-item>
           </v-card>
         </v-col>
         <v-col :cols="12">
           <v-select
             v-model="speechStore.tts.type"
-            :label="$t('settings.captions.tts.type')"
+            :label="$t('settings.app_settings.tts.type')"
             :items="tts_options"
             item-title="title"
             item-value="value"
@@ -31,8 +34,11 @@
             class="align-center"
             max="1.5"
             min=".1"
-            :label="$t('settings.captions.tts.rate')"
-            thumb-color="primary"
+            :label="$t('settings.app_settings.tts.rate')"
+            color="primary"
+            track-color="surface-variant"
+            thumb-color="surface-bright"
+            step="0.1"
             hide-details
           >
             <template #append>
@@ -55,8 +61,11 @@
             class="align-center"
             max="1.5"
             min=".1"
-            :label="$t('settings.captions.tts.pitch')"
-            thumb-color="primary"
+            :label="$t('settings.app_settings.tts.pitch')"
+            color="primary"
+            track-color="surface-variant"
+            thumb-color="surface-bright"
+            step="0.1"
             hide-details
           >
             <template #append>
@@ -74,7 +83,7 @@
           </v-slider>
         </v-col>
         <v-col :cols="12">
-          <v-radio-group v-model="speechStore.tts.voice" :label="$t('settings.captions.tts.language')">
+          <v-radio-group v-model="speechStore.tts.voice" :label="$t('settings.app_settings.tts.language')">
             <v-text-field v-model="search_lang" class="mb-2" label="Search" variant="outlined" hide-details />
             <v-card v-for="(language, i) in filtered_lang" class="pa-2 mb-2" :color="language.name === speechStore.tts.voice ? 'primary' : 'default'" @click="speechStore.tts.voice = language.name">
               <v-row class="pa-3">
@@ -88,7 +97,6 @@
             </v-card>
           </v-radio-group>
         </v-col>
-        <v-divider />
       </v-row>
     </v-card-text>
   </v-card>

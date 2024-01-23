@@ -15,8 +15,8 @@
         @click="$router.push({ path: `/settings/${setting.value}` })"
       />
 
-      <v-divider />
-      <v-list-subheader>{{ $t('settings.captions.title') }}</v-list-subheader>
+      <v-divider class="my-2" />
+      <v-list-subheader>{{ $t('settings.app_settings.title') }}</v-list-subheader>
       <v-list-item
         v-for="(setting, i) in settings_captions"
         :prepend-icon="setting.icon"
@@ -27,10 +27,10 @@
         @click="$router.push({ path: `/settings/${setting.value}` })"
       />
 
-      <v-divider />
-      <v-list-subheader>{{ $t('settings.connections.title') }}</v-list-subheader>
+      <v-divider class="my-2" />
+      <v-list-subheader>{{ $t('settings.connections.title') }}<v-icon class="ml-1">mdi-broadcast</v-icon></v-list-subheader>
       <v-list-item
-        v-for="(setting, i) in connections"
+        v-for="(setting, i) in settings_connections"
         :prepend-icon="setting.icon"
         :title="setting.title"
         :value="setting.value"
@@ -39,8 +39,8 @@
         @click="$router.push({ path: `/settings/${setting.value}` })"
       />
 
-      <v-divider />
-      <v-list-subheader>{{ $t('settings.osc.title') }}</v-list-subheader>
+      <v-divider class="my-2" />
+      <v-list-subheader>{{ $t('settings.osc.title') }}<v-icon class="ml-1">mdi-broadcast</v-icon></v-list-subheader>
       <v-list-item
         v-for="(setting, i) in settings_osc"
         :prepend-icon="setting.icon"
@@ -50,10 +50,8 @@
         color="primary"
         @click="$router.push({ path: `/settings/${setting.value}` })"
       />
-      <v-divider />
 
-      <v-divider />
-      <v-list-subheader>{{ $t('settings.advanced.title') }}</v-list-subheader>
+      <v-divider class="my-2" />
       <v-list-item
         v-for="(setting, i) in settings_advanced"
         :prepend-icon="setting.icon"
@@ -62,13 +60,14 @@
         :active="setting.value === $route.name"
         color="primary"
         @click="$router.push({ path: `/settings/${setting.value}` })"
+        class="mb-16"
       />
     </v-list>
 
     <!-- <v-list :items="settings_list" density="compact" nav></v-list> -->
     <template #append>
       <v-divider />
-      <v-col class="d-flex justify-end mt-1 px-2">
+      <v-col id="version-bar" class="d-flex justify-end px-2 align-center">
         <v-btn v-if="update_available" size="small" variant="flat" prepend-icon="mdi-download" @click="open_external('https://github.com/naeruru/mimiuchi/releases/latest')">
           <template #prepend>
             <v-icon color="success" size="large" />
@@ -83,13 +82,14 @@
     </template>
   </v-navigation-drawer>
 
-  <div id="settings" class="d-flex fill-height justify-center settings">
-    <v-col class="pa-0" cols="12" md="10" lg="8" xl="6">
+  <div id="settings" class="d-flex justify-center settings">
+    <v-col class="pa-0 mt-2" cols="12" md="10" lg="8" xl="6">
       <router-view v-slot="{ Component }" name="panel">
         <transition name="slide-up">
           <component :is="Component" />
         </transition>
       </router-view>
+      <div class="mt-16 pt-8"></div>
     </v-col>
   </div>
 </template>
@@ -143,27 +143,27 @@ export default {
     settings_captions() {
       const settings_captions = [
         {
-          title: this.$t('settings.captions.stt.title'),
+          title: this.$t('settings.app_settings.stt.title'),
           value: 'stt',
           icon: 'mdi-microphone-outline',
         },
         {
-          title: this.$t('settings.captions.tts.title'),
+          title: this.$t('settings.app_settings.tts.title'),
           value: 'tts',
           icon: 'mdi-account-voice',
         },
         {
-          title: this.$t('settings.captions.word_replace.title'),
+          title: this.$t('settings.app_settings.word_replace.title'),
           value: 'wordreplace',
           icon: 'mdi-swap-horizontal',
         },
         {
-          title: this.$t('settings.captions.translation.title'),
+          title: this.$t('settings.app_settings.translation.title'),
           value: 'translation',
           icon: 'mdi-translate',
         },
         {
-          title: this.$t('settings.captions.export.title'),
+          title: this.$t('settings.app_settings.export.title'),
           value: 'export',
           icon: 'mdi-export',
         },
@@ -172,12 +172,12 @@ export default {
         return settings_captions
       else return settings_captions.slice(0, 1)
     },
-    connections() {
+    settings_connections() {
       return [
         {
-          title: this.$t('settings.connections.title'),
+          title: this.$t('settings.connections.connections.title'),
           value: 'connections',
-          icon: 'mdi-broadcast',
+          icon: 'mdi-transit-connection-variant',
         },
       ]
     },
@@ -186,10 +186,10 @@ export default {
         {
           title: this.$t('settings.osc.general.title'),
           value: 'osc',
-          icon: 'mdi-transit-connection-variant',
+          icon: 'mdi-message-text',
         },
         {
-          title: this.$t('settings.osc.params.title'),
+          title: this.$t('settings.osc.parameters.title'),
           value: 'oscparams',
           icon: 'mdi-format-list-bulleted-square',
         },
@@ -234,6 +234,15 @@ export default {
 </script>
 
 <style>
+.v-list-subheader__text {
+  display: flex;
+  align-items: center;
+}
+
+#version-bar {
+  height: 60px; /* Match v-footer. */
+}
+
 .settings {
     overflow-y: auto;
     max-height: calc(100svh - v-bind(outer_size));

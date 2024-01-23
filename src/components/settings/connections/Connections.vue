@@ -1,7 +1,7 @@
 <template>
-  <v-card :title="$t('settings.connections.title')" color="transparent" flat>
+  <v-card :title="$t('settings.connections.connections.title')" color="transparent" flat>
     <ConnectionDialog v-model="dialog" :connection="connection_type" />
-    <v-divider />
+    <v-spacer />
     <v-card-text>
       <v-row>
         <!-- <v-col :cols="12">
@@ -36,7 +36,7 @@
         <v-col :cols="12">
           <v-card flat>
             <v-card class="py-2" flat>
-              <v-list-item :title="$t('settings.connections.ws.name')" subtitle="websocket">
+              <v-list-item :title="$t('settings.connections.connections.ws.name')" subtitle="WebSocket">
                 <template #prepend>
                   <v-icon
                     icon="mdi-transit-connection-horizontal"
@@ -53,7 +53,7 @@
                 <template #append>
                   <v-btn
                     class="mr-4"
-                    icon variant="text" @click.stop="open_dialog({ title: 'Websocket', icon: 'mdi-transit-connection-horizontal', type: 'ws' })"
+                    icon variant="text" @click.stop="open_dialog({ title: 'WebSocket', icon: 'mdi-transit-connection-horizontal', type: 'ws' })"
                   >
                     <v-icon>mdi-cog</v-icon>
                   </v-btn>
@@ -138,7 +138,6 @@
           </v-card>
           <!-- <v-card>meow</v-card> -->
         </v-col>
-        <v-divider />
       </v-row>
     </v-card-text>
   </v-card>

@@ -16,9 +16,9 @@ export const useConnectionStore = defineStore('connections', {
   state: () => ({
     ws: {
       enabled: true,
-      // name: i18n.t('settings.connections.ws.name'),
+      // name: i18n.t('settings.connections.connections.ws.name'),
       icon: 'mdi-transit-connection-horizontal',
-      // description: i18n.t('settings.connections.ws.description'),
+      // description: i18n.t('settings.connections.connections.ws.description'),
       type: 'websocket',
       url: '127.0.0.1:7714',
       port: 7714, // ミ・ミ・ウ・チ

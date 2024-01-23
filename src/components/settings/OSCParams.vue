@@ -1,12 +1,12 @@
 <template>
   <v-card color="transparent" flat>
     <v-card-title>
-      Custom Params
+      Parameter Triggers
       <v-chip prepend-icon="mdi-alert-circle-outline" color="warning" class="ml-2" variant="elevated">
         Subject to change
       </v-chip>
     </v-card-title>
-    <v-divider />
+    <v-spacer />
     <v-card-text>
       <v-card v-for="(param, i) in oscStore.osc_params" v-if="oscStore.osc_params.length" class="mb-4">
         <v-card color="rgba(0, 0, 0, 0)">
@@ -57,7 +57,7 @@
         </v-card>
       </v-card>
       <p v-else>
-        Use the + button to add a new custom param trigger!
+        Use the + button to add a new parameter trigger!
       </p>
       <v-card class="mt-2" color="transparent" flat>
         <v-card-actions>

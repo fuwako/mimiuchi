@@ -1,6 +1,6 @@
 <template>
   <v-card :title="$t('settings.osc.general.title')" color="transparent" flat>
-    <v-divider />
+    <v-spacer />
     <v-card-text>
       <v-row v-if="is_electron()">
         <v-col :cols="12" :sm="6">
@@ -9,68 +9,81 @@
         <v-col :cols="12" :sm="6">
           <v-text-field v-model="oscStore.port" :label="$t('settings.osc.general.osc_port')" hide-details />
         </v-col>
-        <v-divider />
-        <v-col :cols="12">
+        <v-col :cols="12" class="mt-8">
           <v-card>
-            <v-switch
-              v-model="oscStore.osc_text"
-              :label="$t('settings.osc.general.enabled')"
-              color="primary"
-              hide-details
-              inset
-              class="mx-3"
-            />
+            <v-list-item :title="$t('settings.osc.general.enabled')">
+              <template #append>
+                <v-switch
+                  v-model="oscStore.osc_text"
+                  color="primary"
+                  hide-details
+                  inset
+                  class="mx-3"
+                />
+              </template>
+            </v-list-item>
           </v-card>
 
           <v-card class="mt-2">
-            <v-switch
-              v-model="oscStore.text_typing"
-              :disabled="!oscStore.osc_text"
-              :label="$t('settings.osc.general.typing_indicator')"
-              color="primary"
-              hide-details
-              inset
-              class="mx-3"
-            />
+            <v-list-item :title="$t('settings.osc.general.typing_indicator')">
+              <template #append>
+                <v-switch
+                  v-model="oscStore.text_typing"
+                  :disabled="!oscStore.osc_text"
+                  color="primary"
+                  hide-details
+                  inset
+                  class="mx-3"
+                />
+              </template>
+            </v-list-item>
           </v-card>
 
           <v-card class="mt-2">
-            <v-switch
-              v-model="oscStore.stt_typing"
-              :disabled="!oscStore.osc_text"
-              :label="$t('settings.osc.general.speech_indicator')"
-              color="primary"
-              hide-details
-              inset
-              class="mx-3"
-            />
+            <v-list-item :title="$t('settings.osc.general.speech_indicator')">
+              <template #append>
+                <v-switch
+                  v-model="oscStore.stt_typing"
+                  :disabled="!oscStore.osc_text"
+                  color="primary"
+                  hide-details
+                  inset
+                  class="mx-3"
+                />
+              </template>
+            </v-list-item>
           </v-card>
 
           <v-card class="mt-2">
-            <v-switch
-              v-model="oscStore.show_keyboard"
-              :disabled="!oscStore.osc_text"
-              :label="$t('settings.osc.general.show_keyboard')"
-              color="primary"
-              hide-details
-              inset
-              class="mx-3"
-            />
+            <v-list-item :title="$t('settings.osc.general.show_keyboard')">
+              <template #append>
+                <v-switch
+                  v-model="oscStore.show_keyboard"
+                  :disabled="!oscStore.osc_text"
+                  color="primary"
+                  hide-details
+                  inset
+                  class="mx-3"
+                />
+              </template>
+            </v-list-item>
           </v-card>
 
           <v-card class="mt-2">
-            <v-switch
-              v-model="oscStore.sfx"
-              :disabled="!oscStore.osc_text || oscStore.show_keyboard"
-              :label="$t('settings.osc.general.sfx')"
-              color="primary"
-              hide-details
-              inset
-              class="mx-3"
-            />
+            <v-list-item :title="$t('settings.osc.general.sfx')">
+              <template #append>
+                <v-switch
+                  v-model="oscStore.sfx"
+                  :disabled="!oscStore.osc_text || oscStore.show_keyboard"
+                  color="primary"
+                  hide-details
+                  inset
+                  class="mx-3"
+                />
+              </template>
+            </v-list-item>
           </v-card>
         </v-col>
-        <v-divider />
       </v-row>
       <v-row v-if="!is_electron()" class="justify-center">
         <v-col :cols="12">

@@ -8,7 +8,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-divider />
+    <v-spacer />
     <v-card-text>
       <v-row>
         <v-col :cols="12" :md="12" class="d-flex flex-no-wrap justify-space-between">
