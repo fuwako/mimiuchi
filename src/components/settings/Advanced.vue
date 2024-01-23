@@ -4,7 +4,7 @@
       {{ snackbar_text }}
       <template #actions>
         <v-btn variant="text" @click="snackbar = false">
-          {{ $t('settings.advanced.reset.restoredefaults.snackbar.button') }}
+          {{ $t('settings.advanced.restoredefaults.snackbar.button') }}
         </v-btn>
       </template>
     </v-snackbar>
@@ -13,7 +13,7 @@
       <v-row>
         <v-col :cols="12" :md="12" class="d-flex flex-no-wrap justify-space-between">
           <v-card-text class="text-subtitle-1 font-weight-medium">
-            {{ $t('settings.advanced.reset.restoredefaults.button') }}
+            {{ $t('settings.advanced.restoredefaults.button') }}
           </v-card-text>
           <v-btn color="error" class="mt-2">
             <v-icon>mdi-restore</v-icon>
@@ -23,9 +23,9 @@
               max-width="500"
             >
               <v-card>
-                <v-card-title>{{ $t('settings.advanced.reset.restoredefaults.dialog.title') }}</v-card-title>
+                <v-card-title>{{ $t('settings.advanced.restoredefaults.dialog.title') }}</v-card-title>
                 <v-card-text>
-                  {{ $t('settings.advanced.reset.restoredefaults.dialog.description') }}
+                  {{ $t('settings.advanced.restoredefaults.dialog.description') }}
                 </v-card-text>
                 <v-form validate-on="input" @submit.prevent="reset_submit">
                   <v-card-actions>
@@ -36,7 +36,7 @@
                   </v-card-actions>
                 </v-form>
                 <v-btn class="mt-2" color="error" @click="reset_settings()">
-                  {{ $t('settings.advanced.reset.restoredefaults.dialog.button') }}
+                  {{ $t('settings.advanced.restoredefaults.dialog.button') }}
                 </v-btn>
               </v-card>
             </v-dialog>
@@ -114,7 +114,7 @@ export default {
       if (this.connection)
         this.connectionStore.$reset()
       this.reset_dialog = false
-      this.snackbar_text = this.$t('settings.advanced.reset.restoredefaults.snackbar.title')
+      this.snackbar_text = this.$t('settings.advanced.restoredefaults.snackbar.title')
       this.snackbar = true
       // this.$i18n.locale = this.settingsStore.language
     },

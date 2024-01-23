@@ -182,20 +182,16 @@ export default {
     },
     advanced: {
       title: 'Advanced',
-      reset: {
-        title: 'Reset',
-        description: 'Reset all settings',
-        restoredefaults: {
-          button: 'Restore Defaults',
-          dialog: {
-            title: 'Restore Defaults',
-            description: 'You are about to reset settings for the entire application.',
-            button: 'Reset',
-          },
-          snackbar: {
-            title: 'Settings reset',
-            button: 'Close',
-          },
+      restoredefaults: {
+        button: 'Restore Defaults',
+        dialog: {
+          title: 'Restore Defaults',
+          description: 'You are about to reset settings for the entire application.',
+          button: 'Reset',
+        },
+        snackbar: {
+          title: 'Settings reset',
+          button: 'Close',
         },
       },
     },
