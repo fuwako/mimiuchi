@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('settings.appearance.title')" :subtitle="$t('settings.appearance.description')" color="transparent" flat>
+  <v-card :title="$t('settings.appearance.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
       <v-row>
@@ -145,7 +145,7 @@ import { useAppearanceStore } from '@/stores/appearance'
 import { get_fonts } from '@/helpers/get_fonts'
 
 export default {
-  name: 'SettingsGeneral',
+  name: 'SettingsAppearance',
   setup() {
     const appearanceStore = useAppearanceStore()
 

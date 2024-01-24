@@ -1,5 +1,5 @@
 <template>
-  <v-card :title="$t('settings.tts.title')" :subtitle="$t('settings.tts.description')" color="transparent" flat>
+  <v-card :title="$t('settings.captions.tts.title')" color="transparent" flat>
     <v-divider />
     <v-card-text>
       <v-row>
@@ -7,7 +7,7 @@
           <v-card flat>
             <v-switch
               v-model="speechStore.tts.enabled"
-              :label="$t('settings.tts.enabled')"
+              :label="$t('settings.captions.tts.enabled')"
               color="primary"
               hide-details
               inset
@@ -18,7 +18,7 @@
         <v-col :cols="12">
           <v-select
             v-model="speechStore.tts.type"
-            :label="$t('settings.tts.type')"
+            :label="$t('settings.captions.tts.type')"
             :items="tts_options"
             item-title="title"
             item-value="value"
@@ -31,7 +31,7 @@
             class="align-center"
             max="1.5"
             min=".1"
-            :label="$t('settings.tts.rate')"
+            :label="$t('settings.captions.tts.rate')"
             thumb-color="primary"
             hide-details
           >
@@ -55,7 +55,7 @@
             class="align-center"
             max="1.5"
             min=".1"
-            :label="$t('settings.tts.pitch')"
+            :label="$t('settings.captions.tts.pitch')"
             thumb-color="primary"
             hide-details
           >
@@ -74,7 +74,7 @@
           </v-slider>
         </v-col>
         <v-col :cols="12">
-          <v-radio-group v-model="speechStore.tts.voice" :label="$t('settings.tts.language')">
+          <v-radio-group v-model="speechStore.tts.voice" :label="$t('settings.captions.tts.language')">
             <v-text-field v-model="search_lang" class="mb-2" label="Search" variant="outlined" hide-details />
             <v-card v-for="(language, i) in filtered_lang" class="pa-2 mb-2" :color="language.name === speechStore.tts.voice ? 'primary' : 'default'" @click="speechStore.tts.voice = language.name">
               <v-row class="pa-3">

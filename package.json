@@ -22,7 +22,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@mdi/font": "5.9.55",
+    "@mdi/font": "^5.9.55",
     "@types/node-osc": "^6.0.3",
     "@xenova/transformers": "^2.10.0",
     "electron-store": "^8.1.0",

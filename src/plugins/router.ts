@@ -6,15 +6,17 @@ import Footer from '@/components/Footer.vue'
 import Home from '@/pages/Home.vue'
 
 import Settings from '@/pages/Settings.vue'
-import SettingsGeneral from '@/components/settings/General.vue'
+import SettingsLanguage from '@/components/settings/Language.vue'
 import STT from '@/components/settings/STT.vue'
 import TTS from '@/components/settings/TTS.vue'
 import Appearance from '@/components/settings/Appearance.vue'
 import WordReplace from '@/components/settings/WordReplace.vue'
 import Translation from '@/components/settings/Translation.vue'
+import Export from '@/components/settings/Export.vue'
 import Connections from '@/components/settings/connections/Connections.vue'
 import OSC from '@/components/settings/OSC.vue'
 import OSCParams from '@/components/settings/OSCParams.vue'
+import Advanced from '@/components/settings/Advanced.vue'
 
 const routes = [
   {
@@ -31,17 +33,17 @@ const routes = [
     name: 'settings',
     components: {
       default: Settings,
-      panel: SettingsGeneral,
+      panel: Settings,
       Header,
       Footer,
     },
     children: [
       {
-        path: 'general',
-        name: 'general',
+        path: 'language',
+        name: 'language',
         components: {
           default: Settings,
-          panel: SettingsGeneral,
+          panel: SettingsLanguage,
           Header,
         },
       },
@@ -91,6 +93,15 @@ const routes = [
         },
       },
       {
+        path: 'export',
+        name: 'export',
+        components: {
+          default: Settings,
+          panel: Export,
+          Header,
+        },
+      },
+      {
         path: 'connections',
         name: 'connections',
         components: {
@@ -114,6 +125,15 @@ const routes = [
         components: {
           default: Settings,
           panel: OSCParams,
+          Header,
+        },
+      },
+      {
+        path: 'advanced',
+        name: 'advanced',
+        components: {
+          default: Settings,
+          panel: Advanced,
           Header,
         },
       },
