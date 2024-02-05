@@ -158,9 +158,7 @@ export default {
           icon: 'mdi-format-list-bulleted-square',
         },
       ]
-      if (is_electron())
-        return settings_osc
-      else return settings_osc.slice(0, 1)
+      return settings_osc
     },
   },
   mounted() {

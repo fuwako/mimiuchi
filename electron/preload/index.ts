@@ -104,6 +104,8 @@ const validChannels = [
   'send-param-event',
   'receive-text-event',
 
+  'sync-store',
+
   'websocket-connect',
   'websocket-started',
   'websocket-error',

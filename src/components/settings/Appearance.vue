@@ -173,6 +173,8 @@ import { useTheme } from 'vuetify'
 import { useAppearanceStore } from '@/stores/appearance'
 import { get_fonts } from '@/helpers/get_fonts'
 
+declare const window: any
+
 export default {
   name: 'SettingsGeneral',
   setup() {

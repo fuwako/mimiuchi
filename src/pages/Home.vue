@@ -5,7 +5,7 @@
         v-for="log in logs"
         :class="{ 'fade-out': log.hide, 'final-text': log.isFinal || log.isTranslationFinal, 'interim-text': !log.isFinal || (!log.isTranslationFinal && log.translate) }"
       >
-        <a v-if="log.hide !== 2">{{ (translationStore.enabled && (log.translation || !translationStore.show_original)) ? log.translation : log.transcript }}&nbsp;&nbsp;</a>
+        <a v-if="log.hide !== 2">{{ (is_electron() && translationStore.enabled && (log.translation || !translationStore.show_original)) ? log.translation : log.transcript }}&nbsp;&nbsp;</a>
         <v-expand-transition v-show="log.pause">
           <div>
             <v-col class="pa-0" />
@@ -14,7 +14,7 @@
       </a>
     </div>
 
-    <WelcomeOverlay :overlay="overlay_main" :page="overlay_page" />
+    <WelcomeOverlay v-if="!is_electron()" :overlay="overlay_main" :page="overlay_page" />
   </v-card>
 </template>
 
@@ -48,27 +48,15 @@ export default {
     const logStore = useLogStore()
     const translationStore = useTranslationStore()
 
-    const font_size = `${appearanceStore.text.font_size}px`
-    const fade_time = `${appearanceStore.text.fade_time}s`
-    const text_color = appearanceStore.text.color
-    const interim_color = appearanceStore.text.interim_color
-
-    const font_name = appearanceStore.text.font.name
-    const font_subtype = appearanceStore.text.font.sub_type
-
     return {
       settingsStore,
       appearanceStore,
       logs: logStore.logs,
       translationStore,
-      font_size,
-      fade_time,
-      text_color,
-      interim_color,
-      font_name,
-      font_subtype,
       height,
       theme,
+
+      is_electron,
     }
   },
   data() {
@@ -103,7 +91,25 @@ export default {
     }
   },
   computed: {
-    outer_size: () => is_electron() ? '90px' : '55px',
+    outer_size: () => is_electron() ? '35px' : '55px',
+    font_size() {
+      return `${this.appearanceStore.text.font_size}px`;
+    },
+    fade_time() {
+      return `${this.appearanceStore.text.fade_time}s`;
+    },
+    text_color() {
+      return this.appearanceStore.text.color;
+    },
+    interim_color() {
+      return this.appearanceStore.text.interim_color;
+    },
+    font_name() {
+      return this.appearanceStore.text.font.name;
+    },
+    font_subtype() {
+      return this.appearanceStore.text.font.sub_type;
+    }
   },
   mounted() {
     if (this.appearanceStore.current_theme in this.theme.themes.value)

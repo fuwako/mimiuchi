@@ -74,6 +74,7 @@
 </template>
 
 <script lang="ts">
+import { useDefaultStore } from '@/stores/default'
 import { useAppearanceStore } from '@/stores/appearance'
 import { useWordReplaceStore } from '@/stores/word_replace'
 import { useSettingsStore } from '@/stores/settings'
@@ -86,6 +87,7 @@ import { useOSCStore } from '@/stores/osc'
 export default {
   name: 'SettingsGeneral',
   setup() {
+    const defaultStore = useDefaultStore()
     const appearanceStore = useAppearanceStore()
     const wordReplaceStore = useWordReplaceStore()
     const settingsStore = useSettingsStore()
@@ -96,6 +98,7 @@ export default {
     const oscStore = useOSCStore()
 
     return {
+      defaultStore,
       appearanceStore,
       wordReplaceStore,
       settingsStore,
@@ -126,6 +129,8 @@ export default {
     snackbar_text: '',
 
     reset_dialog: false,
+
+    default: true,
     appearance: true,
     settings: true,
     word_replace: true,
@@ -137,6 +142,12 @@ export default {
 
     },
     reset_settings() {
+      if (this.default) {
+        if (this.defaultStore.speech.listening)
+          this.speechStore.toggle_listen()
+        if (this.defaultStore.broadcasting)
+          this.defaultStore.toggle_broadcast()
+      }
       if (this.appearance)
         this.appearanceStore.$reset()
       if (this.word_replace)
@@ -155,6 +166,8 @@ export default {
       this.snackbar_text = this.$t('settings.general.reset.snackbar.title')
       this.snackbar = true
       // this.$i18n.locale = this.settingsStore.language
+
+
     },
   },
 }

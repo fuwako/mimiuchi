@@ -10,6 +10,7 @@
 </template>
 
 <script lang="ts">
+import { useDefaultStore } from '@/stores/default'
 import { useAppearanceStore } from '@/stores/appearance'
 import { useWordReplaceStore } from '@/stores/word_replace'
 import { useSettingsStore } from '@/stores/settings'
@@ -19,6 +20,7 @@ import { useConnectionStore } from '@/stores/connections'
 import { useOSCStore } from '@/stores/osc'
 
 import is_electron from '@/helpers/is_electron'
+import sync_store from '@/helpers/sync_store'
 
 import SystemBar from '@/components/appbars/SystemBar.vue'
 
@@ -30,6 +32,7 @@ export default {
     SystemBar,
   },
   setup() {
+    const defaultStore = useDefaultStore()
     const appearanceStore = useAppearanceStore()
     const speechStore = useSpeechStore()
     const wordReplaceStore = useWordReplaceStore()
@@ -40,6 +43,11 @@ export default {
 
     appearanceStore.$subscribe((_, state) => {
       localStorage.setItem('appearance', JSON.stringify(state))
+
+      if (defaultStore.ws) {
+        let data = {store: "appearance", newPatch: state}
+        sync_store(defaultStore.ws, data)
+      }
     })
     speechStore.$subscribe((_, state) => {
       localStorage.setItem('speech', JSON.stringify(state))
@@ -52,12 +60,22 @@ export default {
     })
     translationStore.$subscribe((_, state) => {
       localStorage.setItem('translation', JSON.stringify(state))
+
+      if (defaultStore.ws) {
+        let data = {store: "translation", newPatch: state}
+        sync_store(defaultStore.ws, data)
+      }
     })
     connectionStore.$subscribe((_, state) => {
       localStorage.setItem('connections', JSON.stringify(state))
     })
     oscStore.$subscribe((_, state) => {
       localStorage.setItem('osc', JSON.stringify(state))
+
+      if (defaultStore.ws) {
+        let data = {store: "osc", newPatch: state}
+        sync_store(defaultStore.ws, data)
+      }
     })
 
     appearanceStore.$patch(JSON.parse(localStorage.getItem('appearance') || '{}'))
@@ -69,8 +87,10 @@ export default {
     oscStore.$patch(JSON.parse(localStorage.getItem('osc') || '{}'))
 
     return {
+      appearanceStore,
       settingsStore,
       connectionStore,
+      oscStore,
       is_electron,
       wordReplaceStore,
     }

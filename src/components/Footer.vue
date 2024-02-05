@@ -16,7 +16,7 @@
       </v-btn>
     </template>
   </v-snackbar>
-  <v-footer app class="d-flex flex-column pl-2" height="60" permanent fixed>
+  <v-footer v-if="!is_electron()" app class="d-flex flex-column pl-2" height="60" permanent fixed>
     <div class="d-flex w-100 align-center">
       <v-form
         class="d-flex w-100 align-center"
@@ -166,6 +166,16 @@ export default {
       }
     },
   },
+  created() {
+    if (!this.defaultStore.worker) {
+      this.defaultStore.worker = new Worker(new URL('../worker.ts', import.meta.url), {
+        type: 'module',
+      })
+    }
+    this.defaultStore.worker.addEventListener('message', this.translationStore.onMessageReceived)
+
+    this.speechStore.initialize_speech(this.speechStore.stt.language)
+  },
   unmounted() {
     if (this.defaultStore.speech.listening)
       this.toggleListen()
@@ -184,15 +194,6 @@ export default {
   mounted() {
     this.onResize()
     this.reloadEvents()
-
-    if (!this.defaultStore.worker) {
-      this.defaultStore.worker = new Worker(new URL('../worker.ts', import.meta.url), {
-        type: 'module',
-      })
-    }
-    this.defaultStore.worker.addEventListener('message', this.translationStore.onMessageReceived)
-
-    this.speechStore.initialize_speech(this.speechStore.stt.language)
   },
   methods: {
     toggleListen() {
@@ -324,6 +325,34 @@ export default {
         window.ipcRenderer.receive('receive-text-event', (event: any, data: any) => {
           event = JSON.parse(event)
           this.onSubmit(event)
+        })
+        window.ipcRenderer.receive('sync-store', (event: any, data: any) => {
+          event = JSON.parse(event)
+
+          switch (event.store) {
+            case 'settings':
+              this.settingsStore.$state = event.newPatch
+              break
+            case 'appearance':
+              this.appearanceStore.$state = event.newPatch
+              break
+            // case 'stt'
+            // Unnecessary: the web app handles all STT
+            // case 'tts':
+            // Unsynchronized
+            // case 'wordreplace':
+            // Unnecessary: input is already processed in the web app
+            case 'translation':
+              this.translationStore.$state = event.newPatch
+              break
+            // case 'Connections:'
+            // Unsynchronized
+            case 'osc': // OSC, OSC Parameters
+              this.oscStore.$state = event.newPatch
+              break
+            default:
+              break
+          }
         })
       }
     },

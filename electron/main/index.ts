@@ -1,5 +1,5 @@
 import { join } from 'node:path'
-import { BrowserWindow, app, ipcMain, shell } from 'electron'
+import { BrowserWindow, Tray, Menu, app, ipcMain, shell } from 'electron'
 
 import Store from 'electron-store'
 
@@ -38,7 +38,21 @@ process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
 //   public: join(__dirname, app.isPackaged ? '../..' : '../../../public'),
 // }
 
+let iconFileName
+
+switch (process.platform) {
+  case 'win32': // Windows
+    iconFileName = 'favicon.ico'
+  case 'darwin': // MacOS
+    iconFileName = 'icon.png'
+  default: // Linux and others (hopefully).
+    iconFileName = 'icon.png'
+}
+
+let iconFilePath = join(process.env.PUBLIC, iconFileName)
+
 let win: BrowserWindow | null = null
+let tray: Tray | null
 // Here, you can also use other preload
 const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
@@ -50,7 +64,7 @@ const window_config: any = {
   title: 'Main window',
   width: 1000,
   height: 700,
-  icon: join(process.env.PUBLIC, 'favicon.ico'),
+  icon: iconFilePath,
   frame: false,
   webPreferences: {
     preload,
@@ -61,6 +75,8 @@ const window_config: any = {
     contextIsolation: true, // was false
   },
 }
+
+let closeForTermination = false // Whether the user is closing with the intent to terminate the application.
 
 async function createWindow() {
   Object.assign(window_config, store.get('win_bounds'))
@@ -94,9 +110,17 @@ async function createWindow() {
 
   win.on('maximize', () => win.webContents.send('maximized_state', true))
   win.on('unmaximize', () => win.webContents.send('maximized_state', false))
-  win.on('close', () => {
+
+  win.on('close', (event) => {
+    if (closeForTermination) {
+      return
+    }
+
     Object.assign(window_config, { isMaximized: win.isMaximized() }, win.getNormalBounds())
     store.set('win_bounds', window_config)
+
+    event.preventDefault() // If this executes, the application won't quit properly. There will be leftover Electron threads.
+    win.hide()
   })
   win.webContents.once('dom-ready', () => {
     if (window_config.isMaximized)
@@ -104,10 +128,61 @@ async function createWindow() {
   })
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  tray = new Tray(iconFilePath)
+
+  tray.on('click', () => {
+    win?.show()
+  })
+
+  let alwaysOnTop = win?.isAlwaysOnTop()
+
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'mimiuchi',
+      click: () => {
+        win?.show()
+      },
+      icon: iconFilePath,
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Always on top',
+      type: 'checkbox',
+      checked: alwaysOnTop,
+      click: () => {
+        alwaysOnTop = !alwaysOnTop;
+        win.setAlwaysOnTop(alwaysOnTop)
+      }
+    },
+    {
+      label: 'Quit',
+      click: () => {
+        if (tray) {
+          tray.destroy()
+        }
+
+        if (win) {
+          win.removeAllListeners('show')
+          closeForTermination = true
+          win.close()
+          win = null
+        }
+      },
+    }
+  ])
+
+  tray?.setContextMenu(contextMenu)
+
+  createWindow()
+
+  win.hide()
+  shell.openExternal('http://127.0.0.1:5173/')
+})
 
 app.on('window-all-closed', () => {
-  win = null
   if (process.platform !== 'darwin')
     app.quit()
 })

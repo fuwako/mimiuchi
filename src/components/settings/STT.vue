@@ -129,6 +129,8 @@ declare interface MediaDevice {
   id?: string
 }
 
+declare const window: any
+
 export default {
   name: 'STT',
   setup() {
@@ -232,6 +234,14 @@ export default {
           }
         })
       })
+    },
+    reloadEvents() {
+      if ( is_electron() ) {
+        window.ipcRenderer.receive('sync-store', (event: any, data: any) => { // Broadcasting is required!
+          event = JSON.parse(event)
+          this.speechStore.$state = event
+        })
+      }
     },
     pin_language(selected_language: list_item) {
       this.speechStore.pin_language(selected_language)
