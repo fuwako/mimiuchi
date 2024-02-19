@@ -52,6 +52,7 @@ const window_config: any = {
   height: 700,
   icon: join(process.env.PUBLIC, 'favicon.ico'),
   frame: false,
+  transparent: true,
   webPreferences: {
     preload,
     // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production

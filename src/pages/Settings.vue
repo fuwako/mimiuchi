@@ -195,6 +195,7 @@ export default {
 .settings {
     overflow-y: auto;
     max-height: calc(100svh - v-bind(outer_size));
+    background: rgb(var(--v-theme-background))
 }
 
 .slide-up-enter-active {

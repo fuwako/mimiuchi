@@ -95,6 +95,10 @@ export default {
 </script>
 
 <style>
+.v-application {
+  background: none !important;
+}
+
 .pointer {
   cursor: pointer;
 }
