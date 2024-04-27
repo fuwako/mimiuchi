@@ -9,17 +9,37 @@
 
     <v-spacer />
 
-    <v-btn class="systembar-button" variant="text" height="35" size="x-small" @click="minimize">
+    <v-btn
+      class="systembar-button"
+      variant="text"
+      height="35"
+      size="x-small"
+      @click="minimize"
+    >
       <v-icon icon="mdi-minus" />
     </v-btn>
 
-    <v-btn variant="text" class="systembar-button ms-2" height="35" size="x-small" @click="toggle_maximize">
+    <v-btn
+      variant="text"
+      class="systembar-button ms-2"
+      height="35"
+      size="x-small"
+      @click="toggle_maximize"
+    >
       <v-icon :icon=" maximized ? 'mdi-checkbox-multiple-blank-outline' : 'mdi-checkbox-blank-outline'" />
     </v-btn>
 
     <v-hover>
       <template #default="{ isHovering, props }">
-        <v-btn v-bind="props" :color="isHovering ? 'red' : undefined" :variant="isHovering ? `flat` : `text`" class="systembar-button ms-2" height="35" size="x-small" @click="close_app">
+        <v-btn
+          v-bind="props"
+          :color="isHovering ? 'red' : undefined"
+          :variant="isHovering ? `flat` : `text`"
+          class="systembar-button ms-2"
+          height="35"
+          size="x-small"
+          @click="settingsStore.minimize_to_tray ? minimize_to_tray() : close_app()"
+        >
           <v-icon icon="mdi-close" />
         </v-btn>
       </template>
@@ -51,8 +71,10 @@ export default {
   },
   mounted() {
     if (is_electron()) {
-      if (this.settingsStore.tray_icon)
+      if (this.settingsStore.persistent_tray_icon) {
+        window.ipcRenderer.send('update_persistent_tray_icon_state', this.settingsStore.persistent_tray_icon)
         window.ipcRenderer.send('create_tray_icon')
+      }
 
       window.ipcRenderer.receive('maximized_state', (event: any, data: any) => {
         this.maximized = event
@@ -71,6 +93,14 @@ export default {
     minimize() {
       if (is_electron())
         window.ipcRenderer.send('minimize')
+    },
+    minimize_to_tray() {
+      if (is_electron()) {
+        if (!this.settingsStore.persistent_tray_icon)
+          window.ipcRenderer.send('create_tray_icon')
+
+        window.ipcRenderer.send('hide')
+      }
     },
   },
 }

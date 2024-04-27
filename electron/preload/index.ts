@@ -97,10 +97,12 @@ const validChannels = [
   'close_app',
   'toggle_maximize',
   'minimize',
+  'hide',
   'maximized_state',
 
   'create_tray_icon',
   'destroy_tray_icon',
+  `update_persistent_tray_icon_state`,
 
   'typing-text-event',
   'send-text-event',

@@ -77,6 +77,7 @@ const window_config: any = {
 }
 
 let alwaysOnTop = win?.isAlwaysOnTop()
+let persistentTrayIcon = false // This is updated with the value of the tray icon property in the settings store (whether's it's set to persistently display or not display)
 
 async function createWindow() {
   Object.assign(window_config, store.get('win_bounds'))
@@ -139,8 +140,9 @@ app.on('second-instance', () => {
 
 app.on('activate', () => {
   const allWindows = BrowserWindow.getAllWindows()
-  if (allWindows.length)
+  if (allWindows.length) {
     allWindows[0].focus()
+  }
   else
     createWindow()
 })
@@ -176,12 +178,19 @@ ipcMain.on('toggle_maximize', () => {
 ipcMain.on('minimize', () => {
   win.minimize()
 })
+// event for hiding
+ipcMain.on('hide', () => {
+  win.hide()
+})
 
 // event for creating the tray icon
 ipcMain.on('create_tray_icon', () => {
   tray = new Tray(iconFilePath)
 
   tray.on('click', () => {
+    if(!persistentTrayIcon) // If the tray icon isn't set to persistently display:
+      tray.destroy() // destroy the tray icon when reactivating the window
+
     win?.show()
   })
 
@@ -227,6 +236,11 @@ ipcMain.on('create_tray_icon', () => {
 // event for destroying the tray icon
 ipcMain.on('destroy_tray_icon', () => {
   tray.destroy()
+})
+
+// event for getting the persistent tray icon state
+ipcMain.on('update_persistent_tray_icon_state', (event, arg: boolean) => {
+  persistentTrayIcon = arg
 })
 
 // event for text typing indicator

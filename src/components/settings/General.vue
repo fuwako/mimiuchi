@@ -32,11 +32,25 @@
               <v-list-item-subtitle class="text-caption">{{ $t('Display a system tray icon for mimiuchi in the taskbar.') }}</v-list-item-subtitle>
               <template #append>
                 <v-switch
-                  v-model="settingsStore.tray_icon"
+                  v-model="settingsStore.persistent_tray_icon"
                   color="primary"
                   hide-details
                   inset
-                  @update:model-value="update_tray_icon"
+                  @update:model-value="configure_tray_icon"
+                />
+              </template>
+            </v-list-item>
+          </v-card>
+          <v-card class="mt-4">
+            <v-list-item>
+              <v-list-item-title>{{ $t('Minimize to Tray') }}</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">{{ $t('Clicking X on the window bar will instead minimize mimiuchi to the system tray.') }}</v-list-item-subtitle>
+              <template #append>
+                <v-switch
+                  v-model="settingsStore.minimize_to_tray"
+                  color="primary"
+                  hide-details
+                  inset
                 />
               </template>
             </v-list-item>
@@ -155,8 +169,10 @@ export default {
     connection: true,
   }),
   methods: {
-    update_tray_icon() {
-      if (this.settingsStore.tray_icon)
+    configure_tray_icon() {
+      window.ipcRenderer.send('update_persistent_tray_icon_state', this.settingsStore.persistent_tray_icon)
+
+      if (this.settingsStore.persistent_tray_icon)
         window.ipcRenderer.send('create_tray_icon')
       else
         window.ipcRenderer.send('destroy_tray_icon')

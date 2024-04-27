@@ -6,7 +6,8 @@ export const useSettingsStore = defineStore('settings', {
     settings_drawer: false,
 
     ui_language: navigator.language.split('-')[0],
-    tray_icon: true,
+    persistent_tray_icon: true,
+    minimize_to_tray: true,
 
     stt_Settings: {
       language: 'en-US',
