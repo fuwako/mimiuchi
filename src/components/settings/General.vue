@@ -25,6 +25,26 @@
         <v-divider />
       </v-row>
       <v-row>
+        <v-col :cols="12">
+          <v-card class="mt-4">
+            <v-list-item>
+              <v-list-item-title>{{ $t('System Tray Icon') }}</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">{{ $t('Display a system tray icon for mimiuchi in the taskbar.') }}</v-list-item-subtitle>
+              <template #append>
+                <v-switch
+                  v-model="settingsStore.tray_icon"
+                  color="primary"
+                  hide-details
+                  inset
+                  @update:model-value="update_tray_icon"
+                />
+              </template>
+            </v-list-item>
+          </v-card>
+        </v-col>
+        <v-divider class="mt-4" />
+      </v-row>
+      <v-row>
         <v-col :cols="12" class="d-flex flex-no-wrap justify-space-between">
           <v-card-text class="text-subtitle-1 font-weight-medium">
             {{ $t('settings.general.transcript') }}
@@ -83,6 +103,8 @@ import { useLogStore } from '@/stores/logs'
 import { useTranslationStore } from '@/stores/translation'
 import { useOSCStore } from '@/stores/osc'
 
+declare const window: any
+
 export default {
   name: 'SettingsGeneral',
   setup() {
@@ -133,6 +155,12 @@ export default {
     connection: true,
   }),
   methods: {
+    update_tray_icon() {
+      if (this.settingsStore.tray_icon)
+        window.ipcRenderer.send('create_tray_icon')
+      else
+        window.ipcRenderer.send('destroy_tray_icon')
+    },
     reset_submit() {
 
     },

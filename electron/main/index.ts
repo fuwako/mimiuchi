@@ -1,5 +1,5 @@
 import { join } from 'node:path'
-import { BrowserWindow, app, ipcMain, shell } from 'electron'
+import { BrowserWindow, Tray, Menu, app, ipcMain, shell } from 'electron'
 
 import Store from 'electron-store'
 
@@ -38,7 +38,21 @@ process.env.PUBLIC = process.env.VITE_DEV_SERVER_URL
 //   public: join(__dirname, app.isPackaged ? '../..' : '../../../public'),
 // }
 
+let iconFileName
+
+switch (process.platform) {
+  case 'win32': // Windows
+    iconFileName = 'favicon.ico'
+  case 'darwin': // MacOS
+    iconFileName = 'logo-16x16.png'
+  default: // Linux and others (hopefully)
+    iconFileName = 'logo-16x16.png'
+}
+
+let iconFilePath = join(process.env.PUBLIC, iconFileName)
+
 let win: BrowserWindow | null = null
+let tray: Tray | null
 // Here, you can also use other preload
 const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
@@ -50,7 +64,7 @@ const window_config: any = {
   title: 'Main window',
   width: 1000,
   height: 700,
-  icon: join(process.env.PUBLIC, 'favicon.ico'),
+  icon: iconFilePath,
   frame: false,
   webPreferences: {
     preload,
@@ -61,6 +75,8 @@ const window_config: any = {
     contextIsolation: true, // was false
   },
 }
+
+let alwaysOnTop = win?.isAlwaysOnTop()
 
 async function createWindow() {
   Object.assign(window_config, store.get('win_bounds'))
@@ -159,6 +175,58 @@ ipcMain.on('toggle_maximize', () => {
 // event for minimizing
 ipcMain.on('minimize', () => {
   win.minimize()
+})
+
+// event for creating the tray icon
+ipcMain.on('create_tray_icon', () => {
+  tray = new Tray(iconFilePath)
+
+  tray.on('click', () => {
+    win?.show()
+  })
+
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'mimiuchi',
+      click: () => {
+        win?.show()
+      },
+      icon: iconFilePath,
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Always on top',
+      type: 'checkbox',
+      checked: alwaysOnTop,
+      click: () => {
+        alwaysOnTop = !alwaysOnTop;
+        win.setAlwaysOnTop(alwaysOnTop)
+      }
+    },
+    {
+      label: 'Quit',
+      click: () => {
+        if (tray) {
+          tray.destroy()
+        }
+
+        if (win) {
+          win.removeAllListeners('show')
+          win.close()
+          win = null
+        }
+      },
+    }
+  ])
+
+  tray?.setContextMenu(contextMenu)
+})
+
+// event for destroying the tray icon
+ipcMain.on('destroy_tray_icon', () => {
+  tray.destroy()
 })
 
 // event for text typing indicator

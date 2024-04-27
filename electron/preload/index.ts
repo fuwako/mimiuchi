@@ -99,6 +99,9 @@ const validChannels = [
   'minimize',
   'maximized_state',
 
+  'create_tray_icon',
+  'destroy_tray_icon',
+
   'typing-text-event',
   'send-text-event',
   'send-param-event',

@@ -28,12 +28,21 @@
 </template>
 
 <script lang="ts">
+import { useSettingsStore } from '@/stores/settings'
+
 import is_electron from '@/helpers/is_electron'
 
 declare const window: any
 
 export default {
   name: 'App',
+  setup() {
+    const settingsStore = useSettingsStore()
+
+    return {
+      settingsStore,
+    }
+  },
   data() {
     return {
       APP_NAME: __APP_NAME__,
@@ -42,6 +51,9 @@ export default {
   },
   mounted() {
     if (is_electron()) {
+      if (this.settingsStore.tray_icon)
+        window.ipcRenderer.send('create_tray_icon')
+
       window.ipcRenderer.receive('maximized_state', (event: any, data: any) => {
         this.maximized = event
       })
