@@ -111,7 +111,7 @@ export default {
     else
       this.theme.global.name.value = 'midnight_purple'
 
-    this.overlay_main = this.settingsStore.welcome
+    this.overlay_main = this.settingsStore.welcome_overlay
     this.onResize()
   },
   methods: {

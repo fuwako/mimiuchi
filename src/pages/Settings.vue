@@ -1,8 +1,8 @@
 <template>
-  <!-- <v-navigation-drawer :width="Math.ceil((window_size.x * .2) / 10) * 10" v-model="settingsStore.drawer" :permanent="!smAndDown" floating v-resize="on_resize">
+  <!-- <v-navigation-drawer :width="Math.ceil((window_size.x * .2) / 10) * 10" v-model="settingsStore.settings_drawer" :permanent="!smAndDown" floating v-resize="on_resize">
             {{ window_size }} {{ Math.ceil((window_size.x * .2) / 2) * 2 }}
         </v-navigation-drawer> -->
-  <v-navigation-drawer v-model="settingsStore.drawer" :permanent="!smAndDown">
+  <v-navigation-drawer v-model="settingsStore.settings_drawer" :permanent="!smAndDown">
     <v-list density="compact" nav>
       <v-list-subheader>{{ $t('settings.title') }}</v-list-subheader>
       <v-list-item
@@ -83,7 +83,7 @@ export default {
     const settingsStore = useSettingsStore()
     const { smAndDown } = useDisplay()
 
-    settingsStore.drawer = !smAndDown.value
+    settingsStore.settings_drawer = !smAndDown.value
 
     return {
       settingsStore,

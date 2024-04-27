@@ -93,7 +93,7 @@ export default {
         this.overlay_page++
       }
       else if (this.overlay_page === 1) {
-        this.settingsStore.welcome = false
+        this.settingsStore.welcome_overlay = false
       }
     },
   },

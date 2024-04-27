@@ -83,9 +83,9 @@ export default {
     if (this.is_electron() && this.connectionStore.ws.enabled)
       window.ipcRenderer.send('start-ws', this.connectionStore.ws.port)
 
-    this.$i18n.locale = this.settingsStore.language
+    this.$i18n.locale = this.settingsStore.ui_language
     this.settingsStore.$subscribe((language, state) => {
-      this.$i18n.locale = this.settingsStore.language
+      this.$i18n.locale = this.settingsStore.ui_language
     })
   },
   created() {

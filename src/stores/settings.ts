@@ -2,12 +2,10 @@ import { defineStore } from 'pinia'
 
 export const useSettingsStore = defineStore('settings', {
   state: () => ({
+    welcome_overlay: true,
+    settings_drawer: false,
 
-    welcome: true,
-
-    language: navigator.language.split('-')[0],
-
-    drawer: true,
+    ui_language: navigator.language.split('-')[0],
 
     stt_Settings: {
       language: 'en-US',

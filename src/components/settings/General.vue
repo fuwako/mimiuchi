@@ -12,8 +12,8 @@
     <v-card-text>
       <v-row>
         <v-col :cols="12">
-          <v-radio-group v-model="settingsStore.language" :label="$t('settings.general.language')">
-            <v-card v-for="(language, i) in languages" class="pa-2 mb-2" :color="language.value === settingsStore.language ? 'primary' : 'default'" @click="settingsStore.language = language.value">
+          <v-radio-group v-model="settingsStore.ui_language" :label="$t('settings.general.language')">
+            <v-card v-for="(language, i) in languages" class="pa-2 mb-2" :color="language.value === settingsStore.ui_language ? 'primary' : 'default'" @click="settingsStore.ui_language = language.value">
               <v-radio :label="language.title" :value="language.value">
                 <template #label>
                   <div>{{ language.title }}</div>

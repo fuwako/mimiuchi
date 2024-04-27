@@ -1,6 +1,6 @@
 <template>
   <v-app-bar color="primary" app flat height="50">
-    <v-app-bar-nav-icon variant="text" @click.stop="settingsStore.drawer = !settingsStore.drawer" />
+    <v-app-bar-nav-icon variant="text" @click.stop="settingsStore.settings_drawer = !settingsStore.settings_drawer" />
     <v-container class="mb-7 fill-height d-flex align-center">
       <v-icon class="me-6 ms-4 d-none d-sm-flex" icon="mdi-weather-night" />
 
