@@ -86,14 +86,14 @@
                 <v-card-text>
                   {{ $t('settings.general.reset.dialog.description') }}
                 </v-card-text>
-                <v-form validate-on="input" @submit.prevent="reset_submit">
+                <!-- <v-form validate-on="input" @submit.prevent="reset_submit">
                   <v-card-actions>
-                    <!-- <v-col>
-                                                <v-checkbox v-model="settings" label="General" hide-details></v-checkbox>
-                                                <v-checkbox v-model="word_replace" label="Word Replace" hide-details></v-checkbox>
-                                            </v-col> -->
+                    <v-col>
+                      <v-checkbox v-model="settings" label="General" hide-details></v-checkbox>
+                      <v-checkbox v-model="word_replace" label="Word Replace" hide-details></v-checkbox>
+                    </v-col>
                   </v-card-actions>
-                </v-form>
+                </v-form> -->
                 <v-btn class="mt-2" color="error" @click="reset_settings()">
                   {{ $t('settings.general.reset.dialog.button') }}
                 </v-btn>
