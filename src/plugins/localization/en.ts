@@ -34,6 +34,14 @@ export default {
       title: 'General Settings',
       description: 'General application settings',
       language: 'Select a UI language',
+      tray_icon: 'System tray icon',
+      tray_icon_description: 'Display a system tray icon for mimiuchi in the taskbar.',
+      tray_icon_controls: {
+        always_on_top: 'Always on top',
+        quit: 'Quit',
+      },
+      minimize_to_tray: 'Minimize to tray',
+      minimize_to_tray_description: 'Clicking X on the window bar will instead minimize mimiuchi to the system tray.',
       transcript: 'Download session transcript',
       reset: {
         button: 'Reset all settings',

@@ -185,6 +185,9 @@ ipcMain.on('hide', () => {
 
 // event for creating the tray icon
 ipcMain.on('create_tray_icon', () => {
+  if (tray)
+    return
+
   tray = new Tray(iconFilePath)
 
   tray.on('click', () => {

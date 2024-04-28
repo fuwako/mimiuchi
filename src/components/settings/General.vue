@@ -28,8 +28,8 @@
         <v-col :cols="12">
           <v-card class="mt-4">
             <v-list-item>
-              <v-list-item-title>{{ $t('System Tray Icon') }}</v-list-item-title>
-              <v-list-item-subtitle class="text-caption">{{ $t('Display a system tray icon for mimiuchi in the taskbar.') }}</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('settings.general.tray_icon') }}</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">{{ $t('settings.general.tray_icon_description') }}</v-list-item-subtitle>
               <template #append>
                 <v-switch
                   v-model="settingsStore.persistent_tray_icon"
@@ -43,8 +43,8 @@
           </v-card>
           <v-card class="mt-4">
             <v-list-item>
-              <v-list-item-title>{{ $t('Minimize to Tray') }}</v-list-item-title>
-              <v-list-item-subtitle class="text-caption">{{ $t('Clicking X on the window bar will instead minimize mimiuchi to the system tray.') }}</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('settings.general.minimize_to_tray') }}</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">{{ $t('settings.general.minimize_to_tray_description') }}</v-list-item-subtitle>
               <template #append>
                 <v-switch
                   v-model="settingsStore.minimize_to_tray"
