@@ -36,10 +36,6 @@ export default {
       language: 'UIの言語を選択',
       tray_icon: 'システムトレイアイコン',
       tray_icon_description: 'システムトレイにアイコンを表示します',
-      tray_icon_controls: {
-        always_on_top: '常に手前に表示',
-        quit: '終了',
-      },
       minimize_to_tray: 'トレイに最小化',
       minimize_to_tray_description: 'タイトルバーの「X」ボタンをクリックすると、アプリケーションはシステムトレイに最小化されます',
       transcript: 'セッショントランスクリプトをダウンロードする',
