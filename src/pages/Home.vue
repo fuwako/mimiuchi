@@ -15,6 +15,11 @@
     </div>
 
     <WelcomeOverlay :overlay="overlay_main" :page="overlay_page" />
+
+    <QuickSettings
+      v-model="settingsStore.quick_settings"
+      class="h-100"
+    />
   </v-card>
 </template>
 
@@ -32,12 +37,15 @@ import { useAppearanceStore } from '@/stores/appearance'
 import { useLogStore } from '@/stores/logs'
 import { useTranslationStore } from '@/stores/translation'
 
+import QuickSettings from '@/components/QuickSettings.vue'
+
 declare const window: any
 
 export default {
   name: 'Home',
   components: {
     WelcomeOverlay,
+    QuickSettings,
   },
   setup() {
     const { height } = useDisplay()

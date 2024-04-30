@@ -12,6 +12,24 @@
     <v-card-text>
       <v-row>
         <v-col :cols="12">
+          <v-card class="mt-4">
+            <v-list-item>
+              <v-list-item-title>{{ $t('Display quick settings') }}</v-list-item-title>
+              <v-list-item-subtitle class="text-caption">{{ $t('The quick settings panel will be displayed in the main view.') }}</v-list-item-subtitle>
+              <template #append>
+                <v-switch
+                  v-model="settingsStore.quick_settings"
+                  color="primary"
+                  hide-details
+                  inset
+                />
+              </template>
+            </v-list-item>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col :cols="12">
           <v-radio-group v-model="settingsStore.language" :label="$t('settings.general.language')">
             <v-card v-for="(language, i) in languages" class="pa-2 mb-2" :color="language.value === settingsStore.language ? 'primary' : 'default'" @click="settingsStore.language = language.value">
               <v-radio :label="language.title" :value="language.value">

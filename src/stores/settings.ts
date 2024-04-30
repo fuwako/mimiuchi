@@ -4,6 +4,7 @@ export const useSettingsStore = defineStore('settings', {
   state: () => ({
 
     welcome: true,
+    quick_settings: false,
 
     language: navigator.language.split('-')[0],
 
